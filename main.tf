@@ -1,9 +1,44 @@
-resource "aci_rest" "fvTenant" {
-  dn         = "uni/tn-${var.name}"
-  class_name = "fvTenant"
+
+locals {
+  subj_filter_list = flatten([
+    for subj in var.subjects : [
+      for flt in lookup(subj, "filters", []) : {
+        id     = "${subj.name}-${flt.filter}"
+        subj   = subj.name
+        filter = flt.filter
+      }
+    ]
+  ])
+}
+
+resource "aci_rest" "vzOOBBrCP" {
+  dn         = "uni/tn-mgmt/oobbrc-${var.name}"
+  class_name = "vzOOBBrCP"
   content = {
     name      = var.name
     nameAlias = var.alias
     descr     = var.description
+    scope     = var.scope
+  }
+}
+
+resource "aci_rest" "vzSubj" {
+  for_each   = { for subj in var.subjects : subj.name => subj }
+  dn         = "${aci_rest.vzOOBBrCP.id}/subj-${each.value.name}"
+  class_name = "vzSubj"
+  content = {
+    name      = each.value.name
+    nameAlias = each.value.alias != null ? each.value.alias : ""
+    descr     = each.value.description != null ? each.value.description : ""
+  }
+}
+
+resource "aci_rest" "vzRsSubjFiltAtt" {
+  for_each   = { for filter in local.subj_filter_list : filter.id => filter }
+  dn         = "${aci_rest.vzSubj[each.value.subj].id}/rssubjFiltAtt-${each.value.filter}"
+  class_name = "vzRsSubjFiltAtt"
+  content = {
+    action         = "permit"
+    tnVzFilterName = each.value.filter
   }
 }

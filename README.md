@@ -1,22 +1,31 @@
 <!-- BEGIN_TF_DOCS -->
-[![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+[![Tests](https://github.com/netascode/terraform-aci-oob-contract/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-oob-contract/actions/workflows/test.yml)
 
-# Terraform ACI Scaffolding Module
+# Terraform ACI OOB Contract Module
 
-Description
+Manages ACI OOB Contract
 
 Location in GUI:
-`Tenants` » `XXX`
+`Tenants` » `mgmt` » `Contracts` » `Out-Of-Band Contracts`
 
 ## Examples
 
 ```hcl
-module "aci_scaffolding" {
-  source = "netascode/scaffolding/aci"
+module "aci_oob_contract" {
+  source = "netascode/oob-contract/aci"
 
-  name        = "ABC"
-  alias       = "ABC-ALIAS"
+  name        = "OOB1"
+  alias       = "OOB1-ALIAS"
   description = "My Description"
+  scope       = "global"
+  subjects = [{
+    name        = "SUB1"
+    alias       = "SUB1-ALIAS"
+    description = "Subject Description"
+    filters = [{
+      filter = "FILTER1"
+    }]
+  }]
 }
 
 ```
@@ -38,20 +47,24 @@ module "aci_scaffolding" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | Tenant name. | `string` | n/a | yes |
-| <a name="input_alias"></a> [alias](#input\_alias) | Tenant alias. | `string` | `""` | no |
-| <a name="input_description"></a> [description](#input\_description) | Tenant description. | `string` | `""` | no |
+| <a name="input_name"></a> [name](#input\_name) | OOB Contract name. | `string` | n/a | yes |
+| <a name="input_alias"></a> [alias](#input\_alias) | Alias. | `string` | `""` | no |
+| <a name="input_description"></a> [description](#input\_description) | Description. | `string` | `""` | no |
+| <a name="input_scope"></a> [scope](#input\_scope) | Scope. Choices: `application-profile`, `tenant`, `context`, `global`. | `string` | `"context"` | no |
+| <a name="input_subjects"></a> [subjects](#input\_subjects) | List of subjects. | <pre>list(object({<br>    name        = string<br>    alias       = optional(string)<br>    description = optional(string)<br>    filters = list(object({<br>      filter = string<br>    }))<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `fvTenant` object. |
-| <a name="output_name"></a> [name](#output\_name) | Tenant name. |
+| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `vzOOBBrCP` object. |
+| <a name="output_name"></a> [name](#output\_name) | OOB contract name. |
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aci_rest.fvTenant](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.vzOOBBrCP](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.vzRsSubjFiltAtt](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.vzSubj](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
 <!-- END_TF_DOCS -->
