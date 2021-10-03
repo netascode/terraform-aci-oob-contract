@@ -1,5 +1,6 @@
 module "aci_oob_contract" {
-  source = "netascode/oob-contract/aci"
+  source  = "netascode/oob-contract/aci"
+  version = ">= 0.0.1"
 
   name        = "OOB1"
   alias       = "OOB1-ALIAS"
