@@ -24,7 +24,7 @@ resource "aci_rest" "vzOOBBrCP" {
 
 resource "aci_rest" "vzSubj" {
   for_each   = { for subj in var.subjects : subj.name => subj }
-  dn         = "${aci_rest.vzOOBBrCP.id}/subj-${each.value.name}"
+  dn         = "${aci_rest.vzOOBBrCP.dn}/subj-${each.value.name}"
   class_name = "vzSubj"
   content = {
     name      = each.value.name
@@ -35,7 +35,7 @@ resource "aci_rest" "vzSubj" {
 
 resource "aci_rest" "vzRsSubjFiltAtt" {
   for_each   = { for filter in local.subj_filter_list : filter.id => filter }
-  dn         = "${aci_rest.vzSubj[each.value.subj].id}/rssubjFiltAtt-${each.value.filter}"
+  dn         = "${aci_rest.vzSubj[each.value.subj].dn}/rssubjFiltAtt-${each.value.filter}"
   class_name = "vzRsSubjFiltAtt"
   content = {
     action         = "permit"
