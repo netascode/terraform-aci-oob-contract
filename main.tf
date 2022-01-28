@@ -11,7 +11,7 @@ locals {
   ])
 }
 
-resource "aci_rest" "vzOOBBrCP" {
+resource "aci_rest_managed" "vzOOBBrCP" {
   dn         = "uni/tn-mgmt/oobbrc-${var.name}"
   class_name = "vzOOBBrCP"
   content = {
@@ -22,9 +22,9 @@ resource "aci_rest" "vzOOBBrCP" {
   }
 }
 
-resource "aci_rest" "vzSubj" {
+resource "aci_rest_managed" "vzSubj" {
   for_each   = { for subj in var.subjects : subj.name => subj }
-  dn         = "${aci_rest.vzOOBBrCP.dn}/subj-${each.value.name}"
+  dn         = "${aci_rest_managed.vzOOBBrCP.dn}/subj-${each.value.name}"
   class_name = "vzSubj"
   content = {
     name      = each.value.name
@@ -33,9 +33,9 @@ resource "aci_rest" "vzSubj" {
   }
 }
 
-resource "aci_rest" "vzRsSubjFiltAtt" {
+resource "aci_rest_managed" "vzRsSubjFiltAtt" {
   for_each   = { for filter in local.subj_filter_list : filter.id => filter }
-  dn         = "${aci_rest.vzSubj[each.value.subj].dn}/rssubjFiltAtt-${each.value.filter}"
+  dn         = "${aci_rest_managed.vzSubj[each.value.subj].dn}/rssubjFiltAtt-${each.value.filter}"
   class_name = "vzRsSubjFiltAtt"
   content = {
     action         = "permit"

@@ -13,7 +13,7 @@ Location in GUI:
 ```hcl
 module "aci_oob_contract" {
   source  = "netascode/oob-contract/aci"
-  version = ">= 0.0.1"
+  version = ">= 0.1.0"
 
   name        = "OOB1"
   alias       = "OOB1-ALIAS"
@@ -28,7 +28,6 @@ module "aci_oob_contract" {
     }]
   }]
 }
-
 ```
 
 ## Requirements
@@ -36,13 +35,13 @@ module "aci_oob_contract" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 0.2.0 |
+| <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aci"></a> [aci](#provider\_aci) | >= 0.2.0 |
+| <a name="provider_aci"></a> [aci](#provider\_aci) | >= 2.0.0 |
 
 ## Inputs
 
@@ -65,7 +64,7 @@ module "aci_oob_contract" {
 
 | Name | Type |
 |------|------|
-| [aci_rest.vzOOBBrCP](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
-| [aci_rest.vzRsSubjFiltAtt](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
-| [aci_rest.vzSubj](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest_managed.vzOOBBrCP](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/rest_managed) | resource |
+| [aci_rest_managed.vzRsSubjFiltAtt](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/rest_managed) | resource |
+| [aci_rest_managed.vzSubj](https://registry.terraform.io/providers/CiscoDevNet/aci/latest/docs/resources/rest_managed) | resource |
 <!-- END_TF_DOCS -->
