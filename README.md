@@ -13,7 +13,7 @@ Location in GUI:
 ```hcl
 module "aci_oob_contract" {
   source  = "netascode/oob-contract/aci"
-  version = ">= 0.1.0"
+  version = ">= 0.2.0"
 
   name        = "OOB1"
   alias       = "OOB1-ALIAS"
@@ -34,7 +34,7 @@ module "aci_oob_contract" {
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3.0 |
 | <a name="requirement_aci"></a> [aci](#requirement\_aci) | >= 2.0.0 |
 
 ## Providers
@@ -51,7 +51,7 @@ module "aci_oob_contract" {
 | <a name="input_alias"></a> [alias](#input\_alias) | Alias. | `string` | `""` | no |
 | <a name="input_description"></a> [description](#input\_description) | Description. | `string` | `""` | no |
 | <a name="input_scope"></a> [scope](#input\_scope) | Scope. Choices: `application-profile`, `tenant`, `context`, `global`. | `string` | `"context"` | no |
-| <a name="input_subjects"></a> [subjects](#input\_subjects) | List of subjects. | <pre>list(object({<br>    name        = string<br>    alias       = optional(string)<br>    description = optional(string)<br>    filters = list(object({<br>      filter = string<br>    }))<br>  }))</pre> | `[]` | no |
+| <a name="input_subjects"></a> [subjects](#input\_subjects) | List of subjects. | <pre>list(object({<br>    name        = string<br>    alias       = optional(string, "")<br>    description = optional(string, "")<br>    filters = list(object({<br>      filter = string<br>    }))<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 

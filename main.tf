@@ -28,8 +28,8 @@ resource "aci_rest_managed" "vzSubj" {
   class_name = "vzSubj"
   content = {
     name      = each.value.name
-    nameAlias = each.value.alias != null ? each.value.alias : ""
-    descr     = each.value.description != null ? each.value.description : ""
+    nameAlias = each.value.alias
+    descr     = each.value.description
   }
 }
 

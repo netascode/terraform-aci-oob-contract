@@ -45,8 +45,8 @@ variable "subjects" {
   description = "List of subjects."
   type = list(object({
     name        = string
-    alias       = optional(string)
-    description = optional(string)
+    alias       = optional(string, "")
+    description = optional(string, "")
     filters = list(object({
       filter = string
     }))
